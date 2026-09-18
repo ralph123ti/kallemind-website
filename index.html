@@ -773,9 +773,10 @@
         <a href="mailto:info@kallemind.co.zw" class="btn btn-primary">Launching Soon</a>
       </div>
       <div class="cta-emails">
-        <a href="mailto:info@kallemind.co.zw">info@kallemind.co.zw</a>
-        <a href="mailto:support@kallemind.co.zw">support@kallemind.co.zw</a>
+        <a href="mailto:info@kallemind.co.zw" onclick="copyEmailFallback(event,'info@kallemind.co.zw')">info@kallemind.co.zw</a>
+        <a href="mailto:support@kallemind.co.zw" onclick="copyEmailFallback(event,'support@kallemind.co.zw')">support@kallemind.co.zw</a>
       </div>
+      <p id="emailCopyNote" style="display:none;color:rgba(255,255,255,0.85);font-size:13px;margin-top:10px;">Email copied to clipboard</p>
     </div>
   </section>
 
@@ -823,6 +824,19 @@
     a.addEventListener('click', closePanel);
   });
 })();
+
+function copyEmailFallback(e, address){
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(address).then(function(){
+      var note = document.getElementById('emailCopyNote');
+      if (note) {
+        note.style.display = 'block';
+        clearTimeout(window._emailNoteTimer);
+        window._emailNoteTimer = setTimeout(function(){ note.style.display = 'none'; }, 2500);
+      }
+    });
+  }
+}
 </script>
 </body>
 </html>
